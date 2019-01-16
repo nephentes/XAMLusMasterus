@@ -15,13 +15,25 @@
             </TextBox>
         </DataTemplate>
         <DataTemplate x:Key="CurrentColorTemplate">
-            <TextBox Background="{Binding CurrentColor, Converter={StaticResource ColorToSolidColorBrushValueConverter}}"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Background="{Binding CurrentColor, Converter={StaticResource ColorToSolidColorBrushValueConverter}}"
                      Text="{Binding CurrentColorText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            </TextBox>
+                </TextBox>
+                <Button Grid.Column="1" Command="{Binding ChangeColorCommand}">.</Button>
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding .}" AutoGenerateColumns="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding ResourceColors}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Resource Key" Binding="{Binding ResourceKey}"/>
                 <DataGridCheckBoxColumn Header="Locked (for automation)" Binding="{Binding Locked}"/>
@@ -29,5 +41,46 @@
                 <DataGridTemplateColumn Header="Current Color" CellTemplate="{StaticResource CurrentColorTemplate}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="3" VerticalAlignment="Stretch"></GridSplitter>
+        <StackPanel Grid.Column="2">
+            <GroupBox Header="Basic">
+                <StackPanel>
+                    <Border>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0">Luminosity</TextBlock>
+                            <Slider Grid.Row="1" Minimum="0" Maximum="1" Value="{Binding Luminosity}"></Slider>
+                        </Grid>
+                    </Border>
+
+                    <Border>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0">Hue</TextBlock>
+                            <Slider Grid.Row="1" Minimum="0" Maximum="1" Value="{Binding Hue}"></Slider>
+                        </Grid>
+                    </Border>
+
+                    <Border>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0">Saturation</TextBlock>
+                            <Slider  Grid.Row="1" Minimum="0" Maximum="1" Value="{Binding Saturation}"></Slider>
+                        </Grid>
+                    </Border>
+
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

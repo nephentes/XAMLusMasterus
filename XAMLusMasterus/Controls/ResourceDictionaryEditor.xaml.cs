@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using XAMLusMasterus.Models;
+using XAMLusMasterus.ViewModels;
 
 namespace XAMLusMasterus.Controls
 {
@@ -23,28 +24,20 @@ namespace XAMLusMasterus.Controls
     public partial class ResourceDictionaryEditor : UserControl
     {
 
-        public ResourceDictionary EditedObject { get; set; }
+        internal ResourceDictionaryEditorViewModel viewModel { get; set; }
 
-        public ObservableCollection<ResourceColor> ResourceColors { get; set; }
 
         public ResourceDictionaryEditor()
         {
             InitializeComponent();
+            viewModel = new ResourceDictionaryEditorViewModel();
         }
 
-        public void Init(ResourceDictionary resourceDictionary)
+        public void Init(ResourceDictionary resourceDictionary, string flatFileContent)
         {
-            ResourceColors = new ObservableCollection<ResourceColor>();
-            EditedObject = resourceDictionary;
-            foreach (var oneKey in EditedObject.Keys)
-            {
-                var colorValue = EditedObject[oneKey] as Color?;
-                if (colorValue != null && colorValue.HasValue)
-                {
-                    ResourceColors.Add(new ResourceColor(oneKey, colorValue.Value));
-                }
-            }
-            this.DataContext = ResourceColors;
+            viewModel.Init(resourceDictionary);
+            viewModel.FileContent = flatFileContent;
+            this.DataContext = viewModel;
         }
 
     }

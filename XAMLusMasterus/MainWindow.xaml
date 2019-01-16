@@ -17,11 +17,13 @@
         <GroupBox Header="File">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBox Margin="2" Name="txtFileName"></TextBox>
-                <Button Click="loadXaml_Clicked" Margin="2" Grid.Column="1" Style="{StaticResource AccentedSquareButtonStyle}">Load</Button>
+                <Button Click="loadXaml_Clicked" Margin="2" Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}">Load-></Button>
+                <TextBox  Grid.Column="1" Margin="2" Name="txtFileName"></TextBox>
+                <Button Click="saveXaml_Clicked" Margin="2" Grid.Column="2" Style="{StaticResource AccentedSquareButtonStyle}">->Save</Button>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" Header="Editor">

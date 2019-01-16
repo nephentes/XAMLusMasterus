@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace XAMLusMasterus
 {
@@ -42,7 +43,7 @@ namespace XAMLusMasterus
                 var loadedResourceDictionary = xamlFileContent as ResourceDictionary;
                 if (loadedResourceDictionary != null)
                 {
-                    resourceDictEditor.Init(loadedResourceDictionary);
+                    resourceDictEditor.Init(loadedResourceDictionary, File.ReadAllText(openFileDialog.FileName));
                     txtFileName.Text = openFileDialog.FileName;
                 }
                 else
@@ -51,6 +52,35 @@ namespace XAMLusMasterus
                 }
 
             }
+
+        }
+
+        private void saveXaml_Clicked(object sender, RoutedEventArgs e)
+        {
+            resourceDictEditor.viewModel.UpdateResourceDictionary();
+
+            /* This bad boy serilized too much :(
+            using (var fileWriter = File.OpenWrite(txtFileName.Text))
+            {
+              
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                XmlWriter writer = XmlWriter.Create(fileWriter, settings);
+                XamlWriter.Save(resourceDictEditor.viewModel.EditedObject, writer);
+            }
+            */
+
+            // for now ugly solution
+            var fileContent = resourceDictEditor.viewModel.FileContent;
+            var replacements = resourceDictEditor.viewModel.GetReplaceList();
+
+            foreach (var stage1 in replacements)
+                fileContent = fileContent.Replace(stage1.Item1, stage1.Item2);
+
+            foreach (var stage2 in replacements)
+                fileContent = fileContent.Replace(stage2.Item2, stage2.Item3);
+
+            File.WriteAllText(txtFileName.Text, fileContent);
 
         }
     }
