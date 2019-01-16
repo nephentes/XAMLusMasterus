@@ -1,0 +1,33 @@
+﻿<Controls:MetroWindow x:Class="XAMLusMasterus.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:XAMLusMasterus"
+                      xmlns:controls="clr-namespace:XAMLusMasterus.Controls"
+                      mc:Ignorable="d"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        Title="Masterus of XAMLus" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <GroupBox Header="File">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="2" Name="txtFileName"></TextBox>
+                <Button Click="loadXaml_Clicked" Margin="2" Grid.Column="1" Style="{StaticResource AccentedSquareButtonStyle}">Load</Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Editor">
+            <controls:ResourceDictionaryEditor x:Name="resourceDictEditor">
+                
+            </controls:ResourceDictionaryEditor>
+        </GroupBox>
+    </Grid>
+</Controls:MetroWindow>
